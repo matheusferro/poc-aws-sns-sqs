@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "me.pocSnsSqs";
+option java_outer_classname = "PocAwsSnsSqs";
+
+package me.pocSnsSqs;
+
+service NotifierApiService {
+
+  rpc SendCustomerData(SendCustomerDataRequest) returns (SendCustomerDataResponse) {}
+}
+
+message SendCustomerDataRequest {
+  string name = 1;
+  string email = 2;
+  string phone = 3;
+  string notify_option = 4;
+}
+
+message SendCustomerDataResponse {
+  string message = 1;
+}
