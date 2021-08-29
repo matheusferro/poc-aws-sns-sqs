@@ -20,9 +20,9 @@ class SnsTopicIntegrationImpl(
             // decide whether the subscribed endpoint will recive message
             .messageAttributes(
                 mapOf(
-                    Pair("NotifyOption",
+                    Pair("notify_option",
                         MessageAttributeValue.builder()
-                            .dataType("String.Array")
+                            .dataType("String")
                             .stringValue(customerModel.notifyOption)
                             .build()
                     )
