@@ -9,3 +9,17 @@ services:
       - 50051:50051
       - 8080:8080
       - 5005:5005
+
+  localstack:
+    container_name: localstack
+    image: localstack/localstack
+    ports:
+      - "127.0.0.1:53:53"
+      - "127.0.0.1:53:53/udp"
+      - "127.0.0.1:443:443"
+      - "127.0.0.1:4566:4566"
+      - "127.0.0.1:4571:4571"
+    environment:
+      - SERVICES=sns,sqs
+      - DEBUG=1
+      - LS_LOG=debug
