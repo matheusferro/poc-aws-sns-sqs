@@ -1,3 +1,14 @@
 micronaut:
   application:
     name: notifierApi
+
+aws:
+  configurations:
+    url: ${AWS_URL:`http://localhost:4566`}
+#    This variables are used if environments variables are not set
+#    region: ${AWS_REGION:`us-east-1`}
+#    keyId: ${AWS_KEY_ID:`test`}
+#    accessKey: ${AWS_ACCESS_KEY:`test`}
+  sns:
+    subscription-topic:
+      arn: ${AWS_SNS_ARN:`arn:aws:sns:us-east-1:00000000000000:subscription-topic`}

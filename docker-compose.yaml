@@ -9,6 +9,12 @@ services:
       - 50051:50051
       - 8080:8080
       - 5005:5005
+    environment:
+      - AWS_URL=http://localstack:4566
+      - AWS_REGION=us-east-1
+      - AWS_ACCESS_KEY_ID=test
+      - AWS_SECRET_ACCESS_KEY=test
+      - AWS_SNS_ARN=arn:aws:sns:us-east-1:000000000000:subscription-topic
 
   localstack:
     container_name: localstack
