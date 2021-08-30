@@ -11,4 +11,12 @@ aws:
 #    accessKey: ${AWS_ACCESS_KEY:`test`}
   sns:
     subscription-topic:
-      arn: ${AWS_SNS_ARN:`arn:aws:sns:us-east-1:00000000000000:subscription-topic`}
+      arn: ${SNS_ARN_SUB:`arn:aws:sns:us-east-1:000000000000:subscription-topic`}
+    notify-topic:
+      arn: ${SNS_ARN_NOTIFY:`arn:aws:sns:us-east-1:000000000000:notify-topic`}
+  sqs:
+    notification-queue:
+      url: ${AWS_QUEUE_URL:`http://localhost:4566/000000000000/send-notification`}
+
+jackson:
+  property-naming-strategy: SNAKE_CASE

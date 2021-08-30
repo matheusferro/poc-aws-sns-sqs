@@ -38,6 +38,8 @@ dependencies {
 
     // https://mvnrepository.com/artifact/software.amazon.awssdk/sns
     implementation("software.amazon.awssdk:sns:2.17.29")
+    // https://mvnrepository.com/artifact/software.amazon.awssdk/sqs
+    implementation("software.amazon.awssdk:sqs:2.17.29")
 }
 
 

@@ -81,3 +81,11 @@ then
 else
   LogError "error on create subscriptions" "$output"
 fi
+
+LogInfo "Creating SQS Queue 'send-notification'..."
+if output=$(aws --endpoint-url http://localhost:4566 sqs create-queue --queue-name send-notification 2>&1);
+then
+  LogSuccess "'send-notification' created:" "$output"
+else
+  LogError "error on create 'send-notification'" "$output"
+fi

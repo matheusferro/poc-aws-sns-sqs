@@ -15,6 +15,9 @@ services:
       - AWS_ACCESS_KEY_ID=test
       - AWS_SECRET_ACCESS_KEY=test
       - AWS_SNS_ARN=arn:aws:sns:us-east-1:000000000000:subscription-topic
+      - SNS_ARN_NOTIFY=arn:aws:sns:us-east-1:000000000000:notify-topic
+    depends_on:
+      - localstack
 
   localstack:
     container_name: localstack
@@ -26,6 +29,6 @@ services:
       - "127.0.0.1:4566:4566"
       - "127.0.0.1:4571:4571"
     environment:
-      - SERVICES=sns,sqs
+      - SERVICES=sns,sqs,ses
       - DEBUG=1
       - LS_LOG=debug
