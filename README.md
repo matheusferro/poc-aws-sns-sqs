@@ -12,6 +12,7 @@ Using AWS SNS and SQS technologies to send and receive messages.
 - Docker 
 - Docker-compose
 - AWS CLI
+- BloomRPC (or any RPC client)
 
 ### Executing
 
