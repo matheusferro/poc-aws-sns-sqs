@@ -1,32 +1,5 @@
 #!/bin/sh
-LogSuccess(){
-  if [ $# -eq 2 ]
-  then
-    echo -e "\e[32m\n$1\nMessage:\n$2\e[39m"
-  else
-    echo -e "\e[32m\n$1\n\e[39m"
-  fi
-}
-
-LogError(){
-  if [ $# -eq 2 ]
-  then
-    echo -e "\e[31m\n$1\nERROR:\n$2\e[39m"
-  else
-    echo -e "\e[31m\n$1\n\e[39m"
-  fi
-  exit
-}
-
-LogInfo(){
-  echo -e "\n$1\n"
-}
-
-if ! aws --version COMMAND &> /dev/null
-then
-  LogSuccess "[INFO] AWS CLI is necessary to use this script."
-  exit
-fi
+. ./util.sh
 
 LogInfo "Creating SNS topic 'subscription-topic'..."
 if output=$(aws --endpoint-url http://localhost:4566 sns create-topic --name subscription-topic 2>&1);
@@ -88,4 +61,20 @@ then
   LogSuccess "'send-notification' created:" "$output"
 else
   LogError "error on create 'send-notification'" "$output"
+fi
+
+LogInfo "Creating SQS Queue 'send-notification-dlq'..."
+if output=$(aws --endpoint-url http://localhost:4566 sqs create-queue --queue-name send-notification-dlq 2>&1);
+then
+  LogSuccess "'send-notification-dlq' created:" "$output"
+else
+  LogError "error on create 'send-notification-dlq'" "$output"
+fi
+
+LogInfo "Configuring DLQ in 'send-notification' queue ..."
+if output=$(aws --endpoint-url http://localhost:4566 sqs set-queue-attributes --queue-url http://localhost:4566/000000000000/send-notification --attributes file://sqs-configuration-for-dlq.json 2>&1);
+then
+  LogSuccess "DLQ configured!"
+else
+  LogError "error on configure DLQ" "$output"
 fi
