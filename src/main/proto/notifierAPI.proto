@@ -15,7 +15,12 @@ message SendCustomerDataRequest {
   string name = 1;
   string email = 2;
   string phone = 3;
-  string notify_option = 4;
+  enum NOTIFYOPT {
+    UNKNOWN = 0;
+    TECH = 1;
+    SPORTS = 2;
+  }
+  NOTIFYOPT notify_option = 4;
 }
 
 message SendCustomerDataResponse {

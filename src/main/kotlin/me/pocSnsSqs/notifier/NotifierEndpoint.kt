@@ -7,6 +7,7 @@ import me.pocSnsSqs.SendCustomerDataRequest
 import me.pocSnsSqs.SendCustomerDataResponse
 import me.pocSnsSqs.customer.CustomerModel
 import me.pocSnsSqs.customer.CustomerService
+import me.pocSnsSqs.customer.NOTIFICATION
 import me.pocSnsSqs.exceptionHandler.ErrorHandler
 import java.security.InvalidParameterException
 
@@ -31,5 +32,5 @@ class NotifierEndpoint(
         responseObserver.onCompleted()
     }
 
-    private fun SendCustomerDataRequest.toModel(): CustomerModel = CustomerModel(this.name, this.email, this.phone, this.notifyOption)
+    private fun SendCustomerDataRequest.toModel(): CustomerModel = CustomerModel(this.name, this.email, this.phone, NOTIFICATION.valueOf(this.notifyOption.toString()))
 }

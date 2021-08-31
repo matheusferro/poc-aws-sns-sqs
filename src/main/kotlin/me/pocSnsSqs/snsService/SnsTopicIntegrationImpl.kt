@@ -10,7 +10,6 @@ import software.amazon.awssdk.services.sns.SnsClient
 import software.amazon.awssdk.services.sns.model.MessageAttributeValue
 import software.amazon.awssdk.services.sns.model.PublishRequest
 import software.amazon.awssdk.services.sns.model.SubscribeRequest
-import java.util.logging.Logger
 
 @Singleton
 class SnsTopicIntegrationImpl(
@@ -32,7 +31,7 @@ class SnsTopicIntegrationImpl(
                         Pair("notify_option",
                             MessageAttributeValue.builder()
                                 .dataType("String")
-                                .stringValue(customerModel.notifyOption)
+                                .stringValue(customerModel.notifyOption.toString())
                                 .build()
                         )
                     )
@@ -68,6 +67,5 @@ class SnsTopicIntegrationImpl(
         }catch (ex: Exception){
             LOGGER.error("Unexpected error while send email\n ${ex.message}")
         }
-
     }
 }

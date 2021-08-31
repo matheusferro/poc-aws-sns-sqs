@@ -24,7 +24,7 @@ class SqsIntegration(
     fun verifyNotificationsQueue(){
         val receiveMessageRequest = ReceiveMessageRequest.builder()
             .queueUrl(AWS_SQS_URL)
-            .visibilityTimeout(10)
+            .maxNumberOfMessages(10)
             .waitTimeSeconds(3)
             .build()
         val messagesResponse = sqsClient.receiveMessage(receiveMessageRequest)

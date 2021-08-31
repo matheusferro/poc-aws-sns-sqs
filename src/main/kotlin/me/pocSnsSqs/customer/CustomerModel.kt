@@ -12,6 +12,10 @@ data class CustomerModel(
     @field:NotBlank(message = "Phone cannot be blank or null.")
     val phone: String,
     @field:NotBlank(message = "Customer should chose one notification option.")
-    val notifyOption: String
-    //TODO: create enum with notification options
+    val notifyOption: NOTIFICATION
 )
+
+enum class NOTIFICATION{
+    TECH,
+    SPORTS
+}
