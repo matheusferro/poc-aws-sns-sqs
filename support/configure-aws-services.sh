@@ -6,7 +6,12 @@ if output=$(aws --endpoint-url http://localhost:4566 sns create-topic --name sub
 then
   LogSuccess "'subscription-topic' created:" "$output"
 else
-  LogError "error on create 'subscription-topic'" "$output"
+  if [[ $output == *"aws configure"* ]]; then
+    printf 'test\ntest\nus-east-1\njson' | aws configure
+    output=$(aws --endpoint-url http://localhost:4566 sns create-topic --name subscription-topic 2>&1)
+  else
+    LogError "error on create 'subscription-topic'" "$output"
+  fi
 fi
 
 LogInfo "Creating SNS topic 'notify-topic'..."

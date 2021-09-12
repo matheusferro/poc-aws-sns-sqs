@@ -1,0 +1,18 @@
+version: '3.3'
+services:
+  localstack:
+    image: localstack/localstack
+    ports:
+      - "127.0.0.1:53:53"
+      - "127.0.0.1:53:53/udp"
+      - "127.0.0.1:443:443"
+      - "127.0.0.1:4566:4566"
+      - "127.0.0.1:4571:4571"
+    environment:
+      - SERVICES=sns,sqs,ses
+      - DEBUG=1
+      - LS_LOG=debug
+    volumes:
+      - '../../../support/util.sh:/opt/code/localstack/util.sh'
+      - '../../../support/sqs-configuration-for-dlq.json:/opt/code/localstack/sqs-configuration-for-dlq.json'
+      - '../../../support/configure-aws-services.sh:/docker-entrypoint-initaws.d/configure-aws-services.sh'
