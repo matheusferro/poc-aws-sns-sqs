@@ -6,6 +6,7 @@ import jakarta.inject.Singleton
 import me.pocSnsSqs.customer.CustomerModel
 import me.pocSnsSqs.sqsService.EmailModel
 import org.slf4j.LoggerFactory
+import software.amazon.awssdk.services.sns.SnsAsyncClient
 import software.amazon.awssdk.services.sns.SnsClient
 import software.amazon.awssdk.services.sns.model.MessageAttributeValue
 import software.amazon.awssdk.services.sns.model.PublishRequest
@@ -47,6 +48,7 @@ class SnsTopicIntegrationImpl(
             snsClient.publish(publishRequest)
         }catch (ex: Exception){
             LOGGER.error("Unexpected error while send customer data\n ${ex.message}")
+            throw ex
         }
     }
 
@@ -66,6 +68,7 @@ class SnsTopicIntegrationImpl(
             snsClient.publish(publishRequest)
         }catch (ex: Exception){
             LOGGER.error("Unexpected error while send email\n ${ex.message}")
+            throw ex
         }
     }
 }
