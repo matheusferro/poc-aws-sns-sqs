@@ -1,13 +1,11 @@
 package me.pocSnsSqs.config
 
-import io.micronaut.context.annotation.Bean
-import io.micronaut.context.annotation.Factory
-import io.micronaut.context.annotation.Primary
-import io.micronaut.context.annotation.Value
+import io.micronaut.context.annotation.*
 import software.amazon.awssdk.services.sns.SnsClient
 import java.net.URI
 
 @Factory
+@Requires(env = ["dev", "prod"])
 class SnsClientFactory(
     @Value("\${aws.configurations.url}") private val AWS_URL: String
     //,@Value("\${aws.configurations.region}") private val AWS_REGION: String
