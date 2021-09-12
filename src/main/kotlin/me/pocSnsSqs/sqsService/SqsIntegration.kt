@@ -20,7 +20,7 @@ class SqsIntegration(
 
     private val LOGGER = LoggerFactory.getLogger(this::class.java)
 
-    @Scheduled(fixedDelay = "10s")
+    @Scheduled(fixedDelay = "10s", initialDelay = "60s")
     fun verifyNotificationsQueue(){
         val receiveMessageRequest = ReceiveMessageRequest.builder()
             .queueUrl(AWS_SQS_URL)
