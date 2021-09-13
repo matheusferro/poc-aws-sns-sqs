@@ -6,7 +6,6 @@ import jakarta.inject.Singleton
 import me.pocSnsSqs.customer.CustomerModel
 import me.pocSnsSqs.sqsService.EmailModel
 import org.slf4j.LoggerFactory
-import software.amazon.awssdk.services.sns.SnsAsyncClient
 import software.amazon.awssdk.services.sns.SnsClient
 import software.amazon.awssdk.services.sns.model.MessageAttributeValue
 import software.amazon.awssdk.services.sns.model.PublishRequest
@@ -29,7 +28,8 @@ class SnsTopicIntegrationImpl(
                 // decide whether the subscribed endpoint will recive message
                 .messageAttributes(
                     mapOf(
-                        Pair("notify_option",
+                        Pair(
+                            "notify_option",
                             MessageAttributeValue.builder()
                                 .dataType("String")
                                 .stringValue(customerModel.notifyOption.toString())
@@ -46,7 +46,7 @@ class SnsTopicIntegrationImpl(
                 .message(objMp.writeValueAsString(customerModel))
                 .build()
             snsClient.publish(publishRequest)
-        }catch (ex: Exception){
+        } catch (ex: Exception) {
             LOGGER.error("Unexpected error while send customer data\n ${ex.message}")
             throw ex
         }
@@ -66,7 +66,7 @@ class SnsTopicIntegrationImpl(
                 .message(emailModel.messageBody)
                 .build()
             snsClient.publish(publishRequest)
-        }catch (ex: Exception){
+        } catch (ex: Exception) {
             LOGGER.error("Unexpected error while send email\n ${ex.message}")
             throw ex
         }
