@@ -1,17 +1,17 @@
 package me.pocSnsSqs.factory
 
-import com.fasterxml.jackson.databind.ObjectMapper
 import io.grpc.ManagedChannel
 import io.micronaut.context.annotation.Bean
 import io.micronaut.context.annotation.Factory
 import io.micronaut.grpc.annotation.GrpcChannel
 import io.micronaut.grpc.server.GrpcServerChannel
 import me.pocSnsSqs.NotifierApiServiceGrpc
-import software.amazon.awssdk.auth.credentials.AwsBasicCredentials
-import software.amazon.awssdk.auth.credentials.StaticCredentialsProvider
 import software.amazon.awssdk.services.sns.SnsClient
+import software.amazon.awssdk.services.sns.model.PublishRequest
+import software.amazon.awssdk.services.sns.model.PublishResponse
 import software.amazon.awssdk.services.sqs.SqsClient
-import java.net.URI
+import software.amazon.awssdk.services.sqs.model.ReceiveMessageRequest
+import software.amazon.awssdk.services.sqs.model.ReceiveMessageResponse
 
 @Factory
 class Clients {
@@ -21,15 +21,25 @@ class Clients {
         NotifierApiServiceGrpc.newBlockingStub(channel)
 
     @Bean
-    fun sqsClient(): SqsClient = SqsClient.builder()
-        .endpointOverride(URI.create("http://localhost:4566"))
-        .credentialsProvider(StaticCredentialsProvider.create(AwsBasicCredentials.create("test", "test")))
-        .build()
+    fun sqsClient(): SqsClient = MockSqs()
 
     @Bean
-    fun snsClient(): SnsClient = SnsClient.builder()
-        .endpointOverride(URI.create("http://localhost:4566"))
-        .credentialsProvider(StaticCredentialsProvider.create(AwsBasicCredentials.create("test", "test")))
-        .build()
+    fun snsClient(): SnsClient = MockSns()
+}
 
+class MockSns() : SnsClient {
+    override fun close() = println("close")
+
+    override fun serviceName(): String = "sns"
+
+    override fun publish(publishRequest: PublishRequest?): PublishResponse = PublishResponse.builder().build()
+}
+
+class MockSqs() : SqsClient {
+    override fun close() = println("close")
+
+    override fun serviceName(): String = "sqs"
+
+    override fun receiveMessage(receiveMessageRequest: ReceiveMessageRequest?): ReceiveMessageResponse =
+        ReceiveMessageResponse.builder().build()
 }
